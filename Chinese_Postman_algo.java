@@ -9,14 +9,25 @@ public class Chinese_Postman_algo {
 	private ArrayList<ArrayList<String>> pairing_sum;
 	private ArrayList<Character> odd = new ArrayList<>();
 	private int len;
-	
+	private int ans;
 	Chinese_Postman_algo(Integer[][] g1) {
 		g = g1;
+		ans = 0;
 		pairing_sum = new ArrayList<ArrayList<String>>();
 		di = new dijkstra_algo();
 		len = g.length;
+		
+		for(int i = 0; i < len; i++) {
+			for(int j = 0; j < len; j++) {
+				ans+=g[i][j];
+			}
+		}
+		ans = ans/2;
 		odd_vertices();
 		gen_pair();
+		ans += dis();
+		
+		System.out.println(ans + "<-- Chinese Postman Distance");
 	}
 	
 	public ArrayList<ArrayList<String>> gen_pair() {
@@ -36,7 +47,7 @@ public class Chinese_Postman_algo {
 		ArrayList<String> last = new ArrayList<String>();
 		get_pair(pairs, (pairs.size()+1)/2, 0, done, last);
 		
-		print_func(pairing_sum);
+//		print_func(pairing_sum);
 		
 		return pairs;
 		
@@ -58,21 +69,27 @@ public class Chinese_Postman_algo {
 		}
 	}
 	
-	public void dis() {
-		int min_ind = -1;
+	public int dis() {
 		int min_sum = Integer.MAX_VALUE;
 		for(int i = 0; i < pairing_sum.size(); i++) {
 			int sum = 0;
-			for(int j = 0; j < pairing_sum.get(0).size(); j++)
-			sum += di.dijkstra_fun(g, (int)(pairing_sum.get(i).get(j).charAt(0)-'A'), (int)(pairing_sum.get(i).get(0).charAt(1)-'A'));
+			int a = 0;
+			for(int j = 0; j < pairing_sum.get(0).size(); j++) {
+				a= di.dijkstra_fun(g, (int)(pairing_sum.get(i).get(j).charAt(0)-'A'), (int)(pairing_sum.get(i).get(j).charAt(1)-'A'));
+				sum+=a;
+//				System.out.println(pairing_sum.get(i).get(j));
+//				System.out.println("dis" + a);
+			}
 //			sum += di.dijkstra_fun(g, (int)(pairing_sum.get(i).get(0).charAt(0)-'A'), (int)(pairing_sum.get(i).get(0).charAt(1)-'A'));
 			
 			if(sum < min_sum) {
 				min_sum = sum;
-				min_ind = i;
 			}
 		}
+		System.out.println("Min sum : "+min_sum);
+		return min_sum;
 	}
+	
 	
 	public void get_pair(ArrayList<ArrayList<String>> pairs, int l, int start_index, ArrayList<Character> done, ArrayList<String> last) {
 		ArrayList<String> tmp = pairs.get(start_index);

@@ -36,9 +36,9 @@ public class Graph {
 			}
 		}
 		
-		for(int i = 0; i < n; i++) {
-			System.out.println(Arrays.deepToString(graph[i]));
-		}
+//		for(int i = 0; i < n; i++) {
+//			System.out.println(Arrays.deepToString(graph[i]));
+//		}
 	}
 	
 }

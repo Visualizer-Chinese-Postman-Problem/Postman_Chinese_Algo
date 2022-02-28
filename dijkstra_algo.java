@@ -55,7 +55,7 @@ public class dijkstra_algo{
             }
             
         }
-        print_func(dis);
+//        print_func(dis);
         return dis[des];
 //        dis[char-'A']
     }
